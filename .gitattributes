@@ -1,0 +1,3 @@
+*.ab linguist-language=Javascript
+example/theme/mdbook-admonish.css linguist-vendored
+
