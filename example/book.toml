@@ -1,0 +1,27 @@
+[book]
+authors = ["phoenixR"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Nord Theme for mdBook"
+
+[preprocessor.admonish]
+command = "mdbook-admonish"
+assets_version = "3.0.2"    # do not edit: managed by `mdbook-admonish install`
+
+[preprocessor.alerts]
+
+[output.html]
+default-theme = "snow-storm"
+preferred-dark-theme = "polar-night"
+additional-css = [
+  "./theme/nord.css",
+  "./theme/nord-highlight.css",
+  "./theme/nord-admonish.css",
+  "./theme/mdbook-admonish.css",
+  "./theme/nord-alerts.css",
+]
+no-section-label = true
+git-repository-url = "https://github.com/phoenixr-codes/mdbook-nord"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/phoenixr-codes/mdbook-nord/edit/main/example/{path}"

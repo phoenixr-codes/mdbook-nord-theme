@@ -1,0 +1,39 @@
+#!/usr/bin/env amber
+
+import { array_contains } from "std/array"
+import * from "std/env"
+import { file_exists } from "std/fs"
+import { file_download } from "std/http"
+import { lowercase } from "std/text"
+
+let version = "1.0"
+let base_url = "https://github.com/phoenixr-codes/mdbook-nord-theme/releases/latest/download/{version}"
+
+main(args) {
+    echo_warning("This installer script is experimental.")
+
+    if not file_exists("book.toml") {
+        echo_error("Please execute this script within the directory containing {bold("book.toml")}", 1)
+    }
+
+    for file_name in ["nord.css", "nord-alerts.css", "nord-admonish.css", "nord-highlight.css"] {
+        if not input_confirm("Do you want to include {bold(file_name)}?") {
+            continue
+        }
+        let url = "{base_url}/{file_name}"
+        file_download(url, "theme/{file_name}")
+        echo_success("Downloaded {bold(file_name)}")
+    }
+
+    for file_name in ["index.hbs", "book.toml"] {
+        let diff = "{file_name}.diff"
+        let url = "{base_url}/{diff}"
+        file_download(url, "/tmp/{diff}")
+        echo_info("Apply the following diff on {bold(file_name)}")
+        if is_command("bat") {
+            $ bat --language diff --plain "/tmp/{diff}" $?
+        } else {
+            $ cat "/tmp/{diff}" $?
+        }
+    }
+}
