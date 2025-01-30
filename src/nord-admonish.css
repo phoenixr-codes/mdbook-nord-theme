@@ -119,14 +119,24 @@ html:is(.polar-night, .snow-storm) :is(.admonish-example) > :is(.admonition-titl
   background-color: var(--nord15);
 }
 
-html:is(.polar-night, .snow-storm) :is(.admonition):is(.admonish-quote, .admonish-cite) {
+html:is(.polar-night) :is(.admonition):is(.admonish-quote, .admonish-cite) {
   border-color: var(--nord6);
 }
-html:is(.polar-night, .snow-storm) :is(.admonish-quote, .admonish-cite) > :is(.admonition-title, summary.admonition-title) {
+html:is(.polar-night) :is(.admonish-quote, .admonish-cite) > :is(.admonition-title, summary.admonition-title) {
   background-color: color-mix(in srgb, var(--nord6) 20%, transparent 80%);
 }
 
-html:is(.polar-night, .snow-storm) :is(.admonish-quote, .admonish-cite) > :is(.admonition-title, summary.admonition-title)::before {
+html:is(.polar-night) :is(.admonish-quote, .admonish-cite) > :is(.admonition-title, summary.admonition-title)::before {
   background-color: var(--nord6);
 }
 
+html:is(.snow-storm) :is(.admonition):is(.admonish-quote, .admonish-cite) {
+  border-color: var(--nord3);
+}
+html:is(.snow-storm) :is(.admonish-quote, .admonish-cite) > :is(.admonition-title, summary.admonition-title) {
+  background-color: color-mix(in srgb, var(--nord3) 20%, transparent 80%);
+}
+
+html:is(.snow-storm) :is(.admonish-quote, .admonish-cite) > :is(.admonition-title, summary.admonition-title)::before {
+  background-color: var(--nord3);
+}
