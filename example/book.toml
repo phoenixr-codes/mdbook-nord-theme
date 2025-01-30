@@ -22,6 +22,6 @@ additional-css = [
   "./theme/nord-alerts.css",
 ]
 no-section-label = true
-git-repository-url = "https://github.com/phoenixr-codes/mdbook-nord"
+git-repository-url = "https://github.com/phoenixr-codes/mdbook-nord-theme"
 git-repository-icon = "fa-github"
-edit-url-template = "https://github.com/phoenixr-codes/mdbook-nord/edit/main/example/{path}"
+edit-url-template = "https://github.com/phoenixr-codes/mdbook-nord-theme/edit/main/example/{path}"
