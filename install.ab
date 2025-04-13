@@ -9,7 +9,6 @@ import { env_var_get, input_confirm, is_command } from "std/env"
 import { dir_create, file_exists } from "std/fs"
 
 let base_url = "https://github.com/phoenixr-codes/mdbook-nord-theme/releases/latest/download"
-let tmp_dir = env_var_get("TMP_DIR") failed { "/tmp" }
 
 /// Modified version of the built-in `file_download` that returns a failure if
 /// the request failed.
@@ -29,6 +28,11 @@ fun file_download(url: Text, path: Text): Bool? {
     return true
 }
 
+fun orelse(text: Text, alternative: Text): Text {
+    if text == "" : return alternative
+    return text
+}
+
 fun echo_success(message: Text): Null {
     echo "✅ {message}"
 }
@@ -43,6 +47,8 @@ fun echo_error(message: Text, exit_code: Num = 1): Null {
 }
 
 main(arguments) {
+    let tmp_dir = orelse(trust env_var_get("TMPDIR"), "/tmp")
+
     if not file_exists("book.toml") {
         echo_error("Please execute this script within the directory containing `{"book.toml"}`", 1)
     }
