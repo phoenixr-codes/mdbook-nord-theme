@@ -6,8 +6,8 @@
 
 ### Quick Install (*nix)
 
-> [!WARNING]
-> The installer is experimental. Prefer using the manual installation method.
+> [!IMPORTANT]
+> You need the `index.hbs` created with `mdbook init --theme`.
 
 In the directory containing `book.toml`, execute
 
@@ -15,7 +15,7 @@ In the directory containing `book.toml`, execute
 bash <(curl https://github.com/phoenixr-codes/mdbook-nord-theme/releases/latest/download/install.sh)
 ```
 
-### Manual Install
+### Manual Installation
 
 1. If you haven't already created a book, create one with: `mdbook init --theme` and delete all files in `theme/` except `index.hbs`.
 2. Create the `theme/` directory of your mdBook directory if it does not exist already.

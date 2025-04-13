@@ -1,39 +1,95 @@
 #!/usr/bin/env amber
 
-import { array_contains } from "std/array"
-import * from "std/env"
-import { file_exists } from "std/fs"
-import { file_download } from "std/http"
-import { lowercase } from "std/text"
+// This script is written in https://docs.amber-lang.com/
 
-let version = "1.0"
-let base_url = "https://github.com/phoenixr-codes/mdbook-nord-theme/releases/latest/download/{version}"
+// TODO: colors not really readable with echo_* functions
+// TODO: nested coloring doesn't work
 
-main(args) {
-    echo_warning("This installer script is experimental.")
+import { env_var_get, input_confirm, is_command } from "std/env"
+import { dir_create, file_exists } from "std/fs"
 
+let base_url = "https://github.com/phoenixr-codes/mdbook-nord-theme/releases/latest/download"
+let tmp_dir = env_var_get("TMP_DIR") failed { "/tmp" }
+
+/// Modified version of the built-in `file_download` that returns a failure if
+/// the request failed.
+fun file_download(url: Text, path: Text): Bool? {
+    if {
+        is_command("curl") {
+            silent $ curl --fail -L -o "{path}" "{url}" $?
+        }
+        is_command("wget") {
+            silent $ wget "{url}" -P "{path}" $?
+        }
+        else {
+            return false
+        }
+    }
+
+    return true
+}
+
+fun echo_success(message: Text): Null {
+    echo "✅ {message}"
+}
+
+fun echo_warning(message: Text): Null {
+    echo "⚠️ {message}"
+}
+
+fun echo_error(message: Text, exit_code: Num = 1): Null {
+    echo "❌ {message}"
+    if exit_code > 0 : exit(exit_code)
+}
+
+main(arguments) {
     if not file_exists("book.toml") {
-        echo_error("Please execute this script within the directory containing {bold("book.toml")}", 1)
+        echo_error("Please execute this script within the directory containing `{"book.toml"}`", 1)
     }
 
     for file_name in ["nord.css", "nord-alerts.css", "nord-admonish.css", "nord-highlight.css"] {
-        if not input_confirm("Do you want to include {bold(file_name)}?") {
+        if not input_confirm("Do you want to include `{file_name}`?", true) {
             continue
         }
         let url = "{base_url}/{file_name}"
-        file_download(url, "theme/{file_name}")
-        echo_success("Downloaded {bold(file_name)}")
+        dir_create("theme")
+        file_download(url, "theme/{file_name}") failed {
+            echo_error("Failed to download from {url}", 1)
+        }
+        echo_success("Downloaded `{file_name}`")
     }
 
-    for file_name in ["index.hbs", "book.toml"] {
-        let diff = "{file_name}.diff"
-        let url = "{base_url}/{diff}"
-        file_download(url, "/tmp/{diff}")
-        echo_info("Apply the following diff on {bold(file_name)}")
-        if is_command("bat") {
-            $ bat --language diff --plain "/tmp/{diff}" $?
-        } else {
-            $ cat "/tmp/{diff}" $?
+    for file_name in ["index.hbs"] {
+        if not input_confirm("Do you want to patch `{file_name}` accordingly?", true) {
+            continue
         }
+        let diff = "{file_name}.patch"
+        let url = "{base_url}/{diff}"
+        file_download(url, "{tmp_dir}/{diff}") failed {
+            echo_error("Failed to download from {url}", 1)
+        }
+        if not is_command("patch") {
+            echo_error("`{"patch"}` is not installed", 0)
+            continue
+        }
+        silent $ patch {"theme/{file_name}"} {"{tmp_dir}/{diff}"} $ failed {
+            echo_error("Failed to patch `{file_name}", 0)
+            continue
+        }
+        echo_success("Patched `{file_name}`")
     }
+
+    let book_config = "[output.html]
+default-theme = \"snow-storm\"
+preferred-dark-theme = \"polar-night\"
+additional-css = [
+  \"./theme/nord.css\",
+  \"./theme/nord-highlight.css\",
+  \"./theme/nord-admonish.css\",
+  \"./theme/mdbook-admonish.css\",
+  \"./theme/nord-alerts.css\",
+]"
+
+    echo "Change `book.toml` as described below:"
+    echo book_config
 }
