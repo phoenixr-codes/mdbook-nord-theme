@@ -12,7 +12,7 @@
 In the directory containing `book.toml`, execute
 
 ```console
-bash <(curl https://github.com/phoenixr-codes/mdbook-nord-theme/releases/latest/download/install.sh)
+bash <(curl -L https://github.com/phoenixr-codes/mdbook-nord-theme/releases/latest/download/install.sh)
 ```
 
 ### Manual Installation
