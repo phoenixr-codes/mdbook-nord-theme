@@ -44,9 +44,9 @@ bash <(curl -L https://github.com/phoenixr-codes/mdbook-nord-theme/releases/late
    + <li role="none"><button role="menuitem" class="theme" id="snow-storm">Snow Storm</button></li>
    ```
    ```diff
-     <link rel="stylesheet" href="{{ path_to_root }}highlight.css">
-     <link rel="stylesheet" href="{{ path_to_root }}tomorrow-night.css">
-     <link rel="stylesheet" href="{{ path_to_root }}ayu-highlight.css">
+     <link rel="stylesheet" id="highlight-css" href="{{ resource "highlight.css" }}">
+     <link rel="stylesheet" id="tomorrow-night-css" href="{{ resource "tomorrow-night.css" }}">
+     <link rel="stylesheet" id="ayu-highlight-css" href="{{ resource "ayu-highlight.css" }}">
    + <link rel="stylesheet" href="{{ path_to_root }}nord-highlight.css">
    ```
 
