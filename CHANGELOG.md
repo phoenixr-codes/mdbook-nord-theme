@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1
+
+## Changed
+
+- Color draft chapters instead of line through. This fixes a bug where
+  because sub chapters adapt the parent chapter's style the sub chapter
+  may be line throughed even if it's not a draft chapter.
+
 ## 1.0
 
 ### Added

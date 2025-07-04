@@ -230,17 +230,13 @@ Styleguide Nord
   --nord15: #b48ead;
 }
 
-/* Alternatively, define the variable `--sidebar-non-existant` */
-.chapter li :not(a) {
-  text-decoration: line-through;
-}
-
 .polar-night {
   --bg: var(--nord0);
   --fg: var(--nord4);
 
   --sidebar-bg: var(--nord1);
   --sidebar-fg: var(--nord4);
+  --sidebar-non-existant: var(--nord12);
   --sidebar-active: var(--nord10);
 
   --icons: var(--nord2);
@@ -275,6 +271,7 @@ Styleguide Nord
 
   --sidebar-bg: var(--nord4);
   --sidebar-fg: var(--nord1);
+  --sidebar-non-existant: var(--nord12);
   --sidebar-active: var(--nord10);
 
   --icons: var(--nord2);
